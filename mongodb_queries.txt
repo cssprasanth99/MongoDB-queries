@@ -1,0 +1,32 @@
+1.Write Mongo query to retrieve the documents from the payments collection with an amount lesser than or equal to 30.
+Ans. query = db.sample.aggregate([{$match : {amount:{$gte 30}}}])
+
+2.Write Mongo query to retrieve orders sorted by order date in ascending order.
+Ans.db.orders.aggregate([{$sort : {order_data:1}}])
+
+3.Write Mongo query to get the total number of orders count per customer ?
+Ans.db.orders.aggregate([{
+    {$group: {_id:"customer_id,count:{$sum id}, {$project:{_id:1,count:1}}}
+}}])
+
+4.Write Mongo query to find the average total of orders made by customers who live in California(CA).
+Ans. db.orders.aggregate([
+    {$match: {"buyers,address.state" : "CA"}},
+    {$group : {_id:null, avgTotal: {$avg;"$total}}},
+    {$project : {_id:0,
+    avgTotal:{$toInt:"$avgTotal"}
+    }}
+])
+
+
+5.Write Mongo query to find Most used payment Method as paymentMethod and the number of time it is used as count.
+Ans.db.payments.aggregate([
+    {$group:{
+        _id:"$paymentMethod",
+        count:{$sum: 1}
+    }},
+    {$project ; {_id:0, paymentMethod:"$_id",count:1}}
+])
+
+6.Write Mongo query to retrieve the ship_date and order_date of an order whose payment status is pending by payment _id.
+Ans.
